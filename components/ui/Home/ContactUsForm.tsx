@@ -22,7 +22,7 @@ export default function ContactUsForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='lg:text-sm 2xl:text-base mt-2 flex flex-col gap-3 lg:gap-1.5 2xl:gap-3'>
+    <form onSubmit={handleSubmit(onSubmit)} className='text-sm md:text-base lg:text-sm 2xl:text-base mt-2 flex flex-col gap-3 lg:gap-1.5 2xl:gap-3'>
       <div className='flex flex-col gap-1'>
         <label htmlFor="name" className='text-white'>Name: </label>
         <input
