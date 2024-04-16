@@ -22,7 +22,7 @@ export default function ContactUsForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='mt-2 flex flex-col gap-3'>
+    <form onSubmit={handleSubmit(onSubmit)} className='lg:text-sm 2xl:text-base mt-2 flex flex-col gap-3 lg:gap-1.5 2xl:gap-3'>
       <div className='flex flex-col gap-1'>
         <label htmlFor="name" className='text-white'>Name: </label>
         <input
@@ -59,7 +59,7 @@ export default function ContactUsForm() {
         />
         {errors.phone && <p className='text-red-800'>Phone Number is required</p>}
       </div>
-      <button type="submit">Submit</button>
+      <button className='self-start font-semibold bg-white px-4 py-1 rounded-2xl' type="submit">Submit</button>
     </form>
   )
 }

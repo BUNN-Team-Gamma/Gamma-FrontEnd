@@ -43,9 +43,9 @@ export default function Navbar() {
   }
 
   return (
-    <nav className='py-5 lg:py-8 px-4 md:px-10 lg:px-40 flex justify-between items-center'>
+    <nav className='py-5 lg:py-8 px-4 md:px-10 lg:px-16 2xl:px-40 flex justify-between items-center'>
       <Link href="/" className='flex items-center gap-2'>
-        <Image src='/Logo.svg' alt='Logo' width={200} height={100} className='w-3/5 md:w-3/4 lg:w-fit' />
+        <Image src='/Logo.svg' alt='Logo' width={200} height={100} className='w-3/5 md:w-3/4 2xl:w-fit' />
       </Link>
       <div className='hidden lg:flex gap-10'>
         {

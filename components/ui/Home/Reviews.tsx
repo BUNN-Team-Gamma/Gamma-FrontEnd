@@ -17,8 +17,8 @@ const reviews = [
 
 export default function Reviews() {
   return (
-    <div className='py-10 lg:py-20 px-4 md:px-10 lg:px-40'>
-      <h1 className='text-center font-bold text-3xl md:text-[44px] mb-8'>
+    <div className='py-10 lg:py-20 px-4 md:px-10 lg:px-16 2xl:px-40'>
+      <h1 className='text-center font-bold text-3xl md:text-4xl mb-8'>
         Our Students&apos; Reviews
       </h1>
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">

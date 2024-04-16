@@ -26,11 +26,11 @@ const services:servicesType[] = [
 
 export default function AIServices() {
   return (
-    <div className='py-10 lg:py-20 px-4 md:px-10 lg:px-40'>
-      <h1 className='text-center font-bold text-3xl md:text-[44px] mb-8 md:mb-16 lg:mb-40'>
+    <div className='py-10 lg:py-20 px-4 md:px-10 lg:px-16 2xl:px-40'>
+      <h1 className='text-center font-bold text-3xl md:text-4xl mb-8 md:mb-16 lg:mb-40'>
         Our AI Services
       </h1>
-      <div className='px-4 py-8 md:px-8 lg:px-16 lg:py-0 bg-[#FFCD92] rounded-2xl'>
+      <div className='px-4 py-8 md:px-8 2xl:px-16 lg:py-0 bg-[#FFCD92] rounded-2xl'>
         <div className="lg:-translate-y-36 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {
             services.map((service) => (
