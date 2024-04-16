@@ -54,7 +54,7 @@ export default function Navbar() {
           ))
         }
       </div>
-      <Link href='/login' className='hidden lg:block'>
+      <Link href='/auth/login' className='hidden lg:block'>
         <PrimaryBtn variant text='Login/Register' size='text-lg' weight='font-medium' />
       </Link>
       <div className='cursor-pointer lg:hidden'>
@@ -68,7 +68,7 @@ export default function Navbar() {
             <Link className='hover:text-primaryColor' onClick={toggleMenu} key={item.path} href={item.path}>{item.name}</Link>
           ))
         }
-        <Link href='/login' onClick={toggleMenu} className='block lg:hidden'>
+        <Link href='/auth/login' onClick={toggleMenu} className='block lg:hidden'>
           <PrimaryBtn variant text='Login/Register' size='' weight='' />
         </Link>
       </div>
