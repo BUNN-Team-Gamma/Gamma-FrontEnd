@@ -1,5 +1,6 @@
 'use client'
 
+import useAuth from '@/hooks/useAuth'
 import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
@@ -19,10 +20,10 @@ export default function SignUpForm() {
     formState: { errors }
   } = useForm<FormValues>()
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const { loading, signup } = useAuth()
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data)
-    reset();
+    signup(data)
   }
 
   return (
@@ -88,7 +89,7 @@ export default function SignUpForm() {
           <label htmlFor='showPassword'>Show Password?</label>
         </div>
       </div>
-      <button className='self-start border-2 border-gray-800 font-semibold px-4 py-1 rounded-2xl' type="submit">Sign Up</button>
+      <button disabled={loading} className='self-start border-2 border-gray-800 font-semibold px-4 py-1 rounded-2xl' type="submit">{loading ? "Signing Up" : "Sign Up"}</button>
     </form>
   )
 }

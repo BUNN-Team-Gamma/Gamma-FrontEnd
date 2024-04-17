@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import useAuth from '@/hooks/useAuth'
 
 type FormValues = {
   username: string,
@@ -18,10 +19,10 @@ export default function LoginForm() {
     formState: { errors }
   } = useForm<FormValues>()
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const { loading, login } = useAuth()
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data)
-    reset();
+    login(data)
   }
 
   return (
@@ -58,7 +59,11 @@ export default function LoginForm() {
           <label htmlFor='showPassword'>Show Password?</label>
         </div>
       </div>
-      <button className='self-start border-2 border-gray-800 font-semibold px-4 py-1 rounded-2xl' type="submit">Login</button>
+      <button disabled={loading} className='self-start border-2 border-gray-800 font-semibold px-4 py-1 rounded-2xl' type="submit">
+        {
+          loading ? "Logging in" : "Log In"
+        }
+      </button>
     </form>
   )
 }
