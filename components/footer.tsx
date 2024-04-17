@@ -24,15 +24,15 @@ const FooterLinks: any = [
   {
     products: [
       {
-        path: '/note-summarization',
+        path: '/dashboard/note-summarization',
         name: 'Note Summarization'
       },
       {
-        path: '/flashcard-creation',
+        path: '/dashboard/flashcard-creation',
         name: 'Flashcard Creation'
       },
       {
-        path: '/text-extraction',
+        path: '/dashboard/text-extraction',
         name: 'Text Extraction'
       },
       {
@@ -79,14 +79,14 @@ export default function Footer() {
         <p className='text-[#686868] font-bold text-sm'>{date.getFullYear()} Decentralized IQ. All Rights Reserved.</p>
         <div className='flex gap-3'>
           <div className='bg-[#191919] flex items-center gap-2 text-white rounded-md p-2 md:p-3'>
-            <FaApple color='white' className='h-7 w-7'/>
+            <FaApple color='white' className='h-7 w-7' />
             <div className='font-semibold'>
               <p className='text-[6.65px]'>Download on the</p>
               <p className='text-xs'>App Store</p>
             </div>
           </div>
           <div className='bg-[#191919] flex items-center gap-2 text-white rounded-md p-2 md:p-3'>
-            <Image src='/Google-play.svg' width={300} height={100} alt="Logo" className='h-6 w-6'/>
+            <Image src='/Google-play.svg' width={300} height={100} alt="Logo" className='h-6 w-6' />
             <div className='font-semibold'>
               <p className='text-[6.65px]'>Get it on</p>
               <p className='text-xs'>Google Play</p>
@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
         </div>
         <div className='w-fit text-sm md:text-base font-medium flex gap-2 rounded-[30px] bg-gray-100'>
-          <input type="email" className='focus:outline-none bg-transparent py-2 px-4 md:py-2 md:px-4'/>
+          <input type="email" className='focus:outline-none bg-transparent py-2 px-4 md:py-2 md:px-4' />
           <button type="submit" className='bg-[#FFCD92] rounded-[30px] py-2 px-4 md:py-4 md:px-8'>Subscribe</button>
         </div>
       </div>
