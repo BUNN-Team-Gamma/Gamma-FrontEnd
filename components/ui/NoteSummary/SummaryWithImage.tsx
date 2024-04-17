@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export default function SummaryWithImage() {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [id, setImageId] = useState<string>('');
-  const [textArray, setTextArray] = useState<any[]>([])
+  const [textArray, setTextArray] = useState([])
 
   const token = getCookie('userToken')
 
@@ -78,9 +78,9 @@ export default function SummaryWithImage() {
 
       <div className='p-4 rounded-2xl resize-none w-4/5 border border-primaryColor'>
         {
-          textArray?.map((item) => {
-            <p>{item}</p>
-          })
+          textArray.map((item: any, index) => (
+            <p key={index}>{item}</p>
+          ))
         }
       </div>
     </div>
