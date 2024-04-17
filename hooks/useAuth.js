@@ -76,7 +76,7 @@ const useAuth = () => {
       const result = await res.json()
       if (result) {
         toast.success('You Successfully signed up.')
-        router.push('/')
+        router.push('/auth/login')
         router.refresh()
       }
     }
