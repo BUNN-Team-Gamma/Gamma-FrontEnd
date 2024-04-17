@@ -103,7 +103,7 @@ export default function Footer() {
           <h2 className='mb-5 md:mb-10 font-bold'>Discover</h2>
           <div className='flex flex-col gap-3 md:gap-4'>
             {
-              FooterLinks[0].discover.map((link) =>
+              FooterLinks[0].discover.map((link: any) =>
                 <Link className='hover:text-primaryColor' key={link.path} href={link.path}>
                   {link.name}
                 </Link>
@@ -116,7 +116,7 @@ export default function Footer() {
           <h2 className='mb-5 md:mb-10 font-bold'>Products</h2>
           <div className='flex flex-col gap-3 md:gap-4'>
             {
-              FooterLinks[1].products.map((link) =>
+              FooterLinks[1].products.map((link: any) =>
                 <Link className='hover:text-primaryColor' key={link.path} href={link.path}>
                   {link.name}
                 </Link>
@@ -128,7 +128,7 @@ export default function Footer() {
           <h2 className='mb-5 md:mb-10  font-bold'>Company</h2>
           <div className='flex flex-col gap-3 md:gap-4'>
             {
-              FooterLinks[2].company.map((link) =>
+              FooterLinks[2].company.map((link: any) =>
                 <Link className='hover:text-primaryColor' key={link.path} href={link.path}>
                   {link.name}
                 </Link>

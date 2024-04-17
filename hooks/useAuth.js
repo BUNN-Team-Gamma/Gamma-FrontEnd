@@ -2,8 +2,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { deleteCookie, setCookie } from 'cookies-next'
-// import { useAuthStore } from '@/store/useAuthStore'
 import toast from 'react-hot-toast'
+import { useAuthStore } from '@/store'
 
 const baseurl = 'https://exam-prep-app.onrender.com/api/v1/auth'
 
@@ -11,6 +11,7 @@ const useAuth = () => {
   const router = useRouter()
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)
+  const setAuthentication = useAuthStore((state) => state.setAuthentication)
 
   const login = async (data) => {
     setLoading(true)
@@ -40,7 +41,9 @@ const useAuth = () => {
     } else {
       const result = await res.json()
       if (result) {
+        console.log(result)
         setCookie('userToken', result.access)
+        setAuthentication(true)
         toast.success('User successfully logged in!')
         setLoading(false)
         router.push('/')
@@ -72,7 +75,6 @@ const useAuth = () => {
     } else {
       const result = await res.json()
       if (result) {
-        setCookie('userToken', result.access)
         toast.success('You Successfully signed up.')
         router.push('/')
         router.refresh()
@@ -90,7 +92,8 @@ const useAuth = () => {
       toast.error('Unable to logout! Please try again')
     } else {
       deleteCookie('userToken')
-      // deleteCookie('user')
+      setAuthentication(false)
+      // // deleteCookie('user')
       // setUser({})
       router.push('/')
       toast.success('Successfully logged out!')
