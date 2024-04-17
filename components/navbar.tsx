@@ -7,6 +7,9 @@ import { MdClose } from 'react-icons/md'
 import Image from 'next/image';
 import { NavLinkType } from '@/lib/definitions';
 import PrimaryBtn from './primaryBtn';
+import { useAuthStore } from '@/store';
+import { getCookie } from 'cookies-next';
+import useAuth from '@/hooks/useAuth';
 
 const navLinks: NavLinkType[] = [
   {
@@ -14,20 +17,16 @@ const navLinks: NavLinkType[] = [
     name: 'Home'
   },
   {
-    path: '/about',
-    name: 'About Course'
+    path: '/dashboard/note-summarization',
+    name: 'Note Summarization'
   },
   {
-    path: '/our-ai',
-    name: 'Our AI'
+    path: '/dashboard/flashcard-creation',
+    name: 'Flashcard Creation'
   },
   {
-    path: '/payment',
-    name: 'Payment'
-  },
-  {
-    path: '/faq',
-    name: 'FAQ'
+    path: '/dashboard/text-extraction',
+    name: 'Text Extraction'
   },
   {
     path: '/contact',
@@ -37,6 +36,15 @@ const navLinks: NavLinkType[] = [
 
 export default function Navbar() {
   const [navbar, setNavbar] = useState<boolean>(false);
+  const authenticated = useAuthStore((state) => state.authenticated)
+  const setAuthentication = useAuthStore((state) => state.setAuthentication)
+  const { logout } = useAuth();
+
+  const token = getCookie('userToken')
+
+  if (token) {
+    setAuthentication(true)
+  }
 
   const toggleMenu = () => {
     setNavbar(!navbar)
@@ -47,16 +55,22 @@ export default function Navbar() {
       <Link href="/" className='flex items-center gap-2'>
         <Image src='/Logo.svg' alt='Logo' width={200} height={100} className='w-3/5 md:w-3/4 2xl:w-fit' />
       </Link>
-      <div className='hidden lg:flex gap-10'>
+      <div className='text-sm hidden lg:flex gap-10'>
         {
           navLinks.map((item) => (
             <Link className='hover:text-primaryColor' key={item.path} href={item.path}>{item.name}</Link>
           ))
         }
       </div>
-      <Link href='/auth/login' className='hidden lg:block'>
-        <PrimaryBtn variant text='Login/Register' size='text-lg' weight='font-medium' />
-      </Link>
+      {
+        authenticated
+          ? <div onClick={logout} className='hidden lg:block'>
+            <PrimaryBtn variant text='Logout' size='' weight='' />
+          </div>
+          : <Link href='/auth/login' className='hidden lg:block'>
+            <PrimaryBtn variant text='Login/Register' size='text-lg' weight='font-medium' />
+          </Link>
+      }
       <div className='cursor-pointer lg:hidden'>
         {
           navbar ? <MdClose onClick={toggleMenu} size={25} /> : <RxHamburgerMenu onClick={toggleMenu} size={25} />
@@ -68,9 +82,15 @@ export default function Navbar() {
             <Link className='hover:text-primaryColor' onClick={toggleMenu} key={item.path} href={item.path}>{item.name}</Link>
           ))
         }
-        <Link href='/auth/login' onClick={toggleMenu} className='block lg:hidden'>
-          <PrimaryBtn variant text='Login/Register' size='' weight='' />
-        </Link>
+        {
+          authenticated
+            ? <div onClick={logout} className='block lg:hidden'>
+              <PrimaryBtn variant text='Logout' size='' weight='' />
+            </div>
+            : <Link href='/auth/login' onClick={toggleMenu} className='block lg:hidden'>
+              <PrimaryBtn variant text='Login/Register' size='' weight='' />
+            </Link>
+        }
       </div>
     </nav>
   )
