@@ -1,14 +1,15 @@
 "use client";
 
+import { getCookie } from "cookies-next";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { FaRegCopy } from "react-icons/fa";
 import Markdown from "react-markdown";
 
 export default function SummaryForm() {
   const [summary, setSummary] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
+  const token = getCookie("userToken");
 
   const handleOnSubmit = async (e: any) => {
     e.preventDefault();
@@ -16,19 +17,18 @@ export default function SummaryForm() {
       setLoading(true);
       const formdata = new FormData();
       formdata.append("content", text);
-
       const requestOptions = {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formdata,
       };
-
       const res = await fetch(
         "https://exam-prep-app.onrender.com/api/v1/summarize/",
         requestOptions
       );
       const result = await res.json();
-
-      console.log(result);
       setLoading(false);
       setSummary(result.summary_content);
     } catch (error) {
@@ -64,7 +64,7 @@ export default function SummaryForm() {
       <div className="p-4 rounded-2xl resize-none w-4/5 border border-primaryColor">
         <article className="md:mx-auto text-justify prose prose-img:w-full dark:prose-invert lg:prose-xl">
           {
-            summary.map((item) => (
+            summary?.map((item) => (
               <Markdown key={item} className="">
                 {item}
               </Markdown>
