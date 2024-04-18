@@ -29,14 +29,6 @@ export default function SummaryWithImage() {
         body: formdata,
       };
 
-      const res = await fetch(
-        "https://exam-prep-app.onrender.com/api/v1/images/upload/",
-        requestOptions
-      );
-      const result = await res.json();
-      console.log(result);
-
-
       const res = await fetch('https://exam-prep-app.onrender.com/api/v1/images/upload/', requestOptions)
       const result = await res.json()
       console.log(result)
