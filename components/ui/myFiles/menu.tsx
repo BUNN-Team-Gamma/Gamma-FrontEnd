@@ -33,13 +33,13 @@ export default function FilesMenu({
           <CiCreditCard1 className="mx-auto" size={"1.5rem"} />
           <span className="text-[0.875rem]">My Flash cards</span>
         </Link>
-        <Link
+        {/* <Link
           onClick={() => setShow(false)}
           href={"/dashboard/files/summaries"}
         >
           <GiNotebook className="mx-auto" size={"1.5rem"} />
           <span className="text-[0.875rem]">My Summaries</span>
-        </Link>
+        </Link> */}
       </div>
     </>
   );

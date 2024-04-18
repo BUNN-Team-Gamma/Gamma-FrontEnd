@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 
 export type CreateFlashcardtype = {
@@ -27,6 +28,7 @@ export default function FlashcardForm({
   const token = getCookie("userToken");
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
+  const router = useRouter();
   const [categoryInput, setCategoryInput] = useState("");
   const endpoint = useMemo(() => {
     return addManually
@@ -88,7 +90,7 @@ export default function FlashcardForm({
         { ...postData, category: category?.id },
         { headers }
       );
-      console.log(data);
+      router.push("/dashboard/files/flashcards");
     } catch (error) {
       console.log(error);
     }
@@ -122,14 +124,14 @@ export default function FlashcardForm({
             htmlFor="number_of_cards"
             className={"flex text-primaryColor font-bold"}
           >
-            <span>Number of Flashcards (max 50)</span>
+            <span>Number of Flashcards (max 10)</span>
           </label>
           <input
             name="number_of_cards"
             id="number_of_cards"
             type={"number"}
             min={1}
-            max={50}
+            max={10}
             onChange={handleChange}
             value={postData?.number_of_cards || 1}
             className="flex w-full border border-primaryColor rounded-lg p-3"
@@ -205,14 +207,14 @@ export default function FlashcardForm({
             <button className="flex justify-center bg-primaryColor p-2 w-32 font-semibold text-white rounded-full">
               <span>Create</span>
             </button>
-            <button
+            {/* <button
               className={
                 (addManually ? "flex " : "hidden ") +
                 " justify-center bg-primaryColor p-2 w-40 font-semibold text-white rounded-full"
               }
             >
               <span>Save and add...</span>
-            </button>
+            </button> */}
           </div>
         </div>
       </form>

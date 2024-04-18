@@ -1,21 +1,12 @@
 "use client";
+import { CategoryType } from "@/components/ui/flashcards/flashcardForm";
 import ListView from "@/components/ui/myFiles/listView";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useEffect, useMemo, useState } from "react";
 
-export type ExtractedText = {
-  text_id: string;
-  image: string;
-  user_id: string;
-  extracted_text: string[];
-  extracted_at: string;
-};
-
-export default function ExtractedTextPage() {
-  const [extractedTextList, setExtractedTextList] = useState<ExtractedText[]>(
-    []
-  );
+export default function FlashcardCategoryListPage() {
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = getCookie("userToken");
   const endpoint_base = "https://exam-prep-app.onrender.com/api/v1/";
 
@@ -31,10 +22,10 @@ export default function ExtractedTextPage() {
     (async () => {
       try {
         const { data } = await axios.get(
-          endpoint_base + "text/extracted-texts/",
+          endpoint_base + "flashcards/categories/",
           { headers }
         );
-        setExtractedTextList(data);
+        setCategoryList(data);
       } catch (error) {
         console.log(error);
       }
@@ -44,8 +35,8 @@ export default function ExtractedTextPage() {
     <>
       <section className="px-16 py-10 flex w-full min-h-80 justify-center">
         <div className="flex flex-col gap-4 w-full">
-          <span className="text-[1.2rem] font-bold">Extracted Texts</span>
-          <ListView list={extractedTextList} />
+          <span className="text-[1.2rem] font-bold">Flashcard Categories</span>
+          <ListView list={categoryList} />
         </div>
       </section>
     </>
