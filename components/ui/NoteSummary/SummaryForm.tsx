@@ -47,15 +47,13 @@ export default function SummaryForm() {
       </form>
       <div className='p-4 rounded-2xl resize-none w-4/5 border border-primaryColor'>
         <article className="md:mx-auto text-justify prose prose-img:w-full dark:prose-invert lg:prose-xl">
-          <Markdown className="">
-            {summary[0]}
-          </Markdown>
-          <Markdown className="">
-            {summary[1]}
-          </Markdown>
-          <Markdown className="">
-            {summary[2]}
-          </Markdown>
+          {
+            summary.map((item) => (
+              <Markdown key={item} className="">
+                {item}
+              </Markdown>
+            ))
+          }
         </article>
       </div>
     </div>
