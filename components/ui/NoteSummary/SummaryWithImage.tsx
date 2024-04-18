@@ -7,19 +7,19 @@ import toast from "react-hot-toast";
 
 export default function SummaryWithImage() {
   const [selectedImage, setSelectedImage] = useState<any>(null);
-  const [text, setText] = useState<string>('Upload');
-  const [textArray, setTextArray] = useState([])
-  const [disabled, setDisbled] = useState<boolean>(false)
+  const [text, setText] = useState<string>("Upload");
+  const [textArray, setTextArray] = useState([]);
+  const [disabled, setDisbled] = useState<boolean>(false);
 
   const token = getCookie("userToken");
 
   const handleImageUpload = async (e: any) => {
     e.preventDefault();
     try {
-      setText('Uploading image')
-      setDisbled(true)
-      const formdata = new FormData()
-      formdata.append('image', selectedImage)
+      setText("Uploading image");
+      setDisbled(true);
+      const formdata = new FormData();
+      formdata.append("image", selectedImage);
 
       const requestOptions = {
         method: "POST",
@@ -29,56 +29,63 @@ export default function SummaryWithImage() {
         body: formdata,
       };
 
-      const res = await fetch('https://exam-prep-app.onrender.com/api/v1/images/upload/', requestOptions)
-      const result = await res.json()
-      console.log(result)
-      handleTextExtraction(result.image_id)
-
+      const res = await fetch(
+        "http://127.0.0.1:8000/api/v1/images/upload/",
+        requestOptions
+      );
+      const result = await res.json();
+      console.log(result);
+      handleTextExtraction(result.image_id);
     } catch (error) {
-      toast.error("An error occurred")
-      setText('Upload')
-      setDisbled(false)
+      toast.error("An error occurred");
+      setText("Upload");
+      setDisbled(false);
     }
-  }
+  };
 
   const handleTextExtraction = async (id: string) => {
     try {
-      setText('Extracting text from image')
-      const formdata = new FormData()
-      formdata.append('image_id', id)
+      setText("Extracting text from image");
+      const formdata = new FormData();
+      formdata.append("image_id", id);
 
       const requestOptions1 = {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: formdata,
-      }
-      const res = await fetch('https://exam-prep-app.onrender.com/api/v1/text/extract/', requestOptions1)
-      const result = await res.json()
-      setTextArray(result.extracted_text)
-      setText('Upload')
-      setDisbled(false)
+      };
+      const res = await fetch(
+        "http://127.0.0.1:8000/api/v1/text/extract/",
+        requestOptions1
+      );
+      const result = await res.json();
+      setTextArray(result.extracted_text);
+      setText("Upload");
+      setDisbled(false);
     } catch (error) {
-      setText('Upload')
-      toast.error("An error occurred")
-      setDisbled(false)
+      setText("Upload");
+      toast.error("An error occurred");
+      setDisbled(false);
     }
   };
 
   return (
     <div className="mx-auto flex flex-col gap-4 items-center">
-
       {selectedImage && (
         <div className="flex justify-center gap-5">
           <img
             alt="not found"
-            width='250px'
+            width="250px"
             src={URL.createObjectURL(selectedImage)}
           />
         </div>
       )}
-      <form onSubmit={handleImageUpload} className="flex flex-col items-center gap-5">
+      <form
+        onSubmit={handleImageUpload}
+        className="flex flex-col items-center gap-5"
+      >
         <input
           type="file"
           name="myImage"
@@ -87,17 +94,18 @@ export default function SummaryWithImage() {
           }}
           required
         />
-        <button disabled={disabled} className='text-white py-2 px-4 bg-primaryColor hover:bg-primaryColor/80 rounded-[54px]'>
+        <button
+          disabled={disabled}
+          className="text-white py-2 px-4 bg-primaryColor hover:bg-primaryColor/80 rounded-[54px]"
+        >
           {text}
         </button>
       </form>
 
-      <div className='p-4 rounded-2xl resize-none w-4/5 border border-primaryColor'>
-        {
-          textArray?.map((item: any, index) => (
-            <p key={index}>{item}</p>
-          ))
-        }
+      <div className="p-4 rounded-2xl resize-none w-4/5 border border-primaryColor">
+        {textArray?.map((item: any, index) => (
+          <p key={index}>{item}</p>
+        ))}
       </div>
     </div>
   );
