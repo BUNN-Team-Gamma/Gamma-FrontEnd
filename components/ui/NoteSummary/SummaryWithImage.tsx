@@ -1,6 +1,7 @@
-'use client'
+"use client";
 
 import { getCookie } from "cookies-next";
+import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -10,10 +11,10 @@ export default function SummaryWithImage() {
   const [textArray, setTextArray] = useState([])
   const [disabled, setDisbled] = useState<boolean>(false)
 
-  const token = getCookie('userToken')
+  const token = getCookie("userToken");
 
   const handleImageUpload = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       setText('Uploading image')
       setDisbled(true)
@@ -21,13 +22,20 @@ export default function SummaryWithImage() {
       formdata.append('image', selectedImage)
 
       const requestOptions = {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: formdata,
+      };
 
-      }
+      const res = await fetch(
+        "https://exam-prep-app.onrender.com/api/v1/images/upload/",
+        requestOptions
+      );
+      const result = await res.json();
+      console.log(result);
+
 
       const res = await fetch('https://exam-prep-app.onrender.com/api/v1/images/upload/', requestOptions)
       const result = await res.json()
@@ -48,7 +56,7 @@ export default function SummaryWithImage() {
       formdata.append('image_id', id)
 
       const requestOptions1 = {
-        method: 'POST',
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`
         },
@@ -64,7 +72,7 @@ export default function SummaryWithImage() {
       toast.error("An error occurred")
       setDisbled(false)
     }
-  }
+  };
 
   return (
     <div className="mx-auto flex flex-col gap-4 items-center">
@@ -100,5 +108,5 @@ export default function SummaryWithImage() {
         }
       </div>
     </div>
-  )
+  );
 }

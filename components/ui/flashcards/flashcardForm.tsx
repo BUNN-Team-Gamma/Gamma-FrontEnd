@@ -101,7 +101,7 @@ export default function FlashcardForm({
             htmlFor="category"
             className="flex text-primaryColor font-bold"
           >
-            <span>Name of Flashcard</span>
+            <span>Flashcard Category</span>
           </label>
           <input
             name="category"
@@ -122,14 +122,14 @@ export default function FlashcardForm({
             htmlFor="number_of_cards"
             className={"flex text-primaryColor font-bold"}
           >
-            <span>Number of Flashcards</span>
+            <span>Number of Flashcards (max 50)</span>
           </label>
           <input
             name="number_of_cards"
             id="number_of_cards"
             type={"number"}
             min={1}
-            max={15}
+            max={50}
             onChange={handleChange}
             value={postData?.number_of_cards || 1}
             className="flex w-full border border-primaryColor rounded-lg p-3"
@@ -185,24 +185,35 @@ export default function FlashcardForm({
             onChange={(event) => {
               setPostdata({
                 ...postData,
-                text: JSON.stringify(event.target.value),
+                text: event.target.value,
               });
             }}
             className="flex w-full border h-32 border-primaryColor rounded-lg p-3"
           />
         </div>
-        <div className="flex gap-4 mx-auto">
-          <button className="flex justify-center bg-primaryColor p-2 w-32 font-semibold text-white rounded-full">
-            <span>Create</span>
-          </button>
+
+        <div className="flex flex-col mx-auto gap-2">
           <button
             className={
               (addManually ? "flex " : "hidden ") +
-              " justify-center bg-primaryColor p-2 w-40 font-semibold text-white rounded-full"
+              " justify-center text-primaryColor font-semibold text-[0.875rem] underline"
             }
           >
-            <span>Save and add...</span>
+            or generate with AI
           </button>
+          <div className="flex gap-4 mx-auto">
+            <button className="flex justify-center bg-primaryColor p-2 w-32 font-semibold text-white rounded-full">
+              <span>Create</span>
+            </button>
+            <button
+              className={
+                (addManually ? "flex " : "hidden ") +
+                " justify-center bg-primaryColor p-2 w-40 font-semibold text-white rounded-full"
+              }
+            >
+              <span>Save and add...</span>
+            </button>
+          </div>
         </div>
       </form>
     </>
