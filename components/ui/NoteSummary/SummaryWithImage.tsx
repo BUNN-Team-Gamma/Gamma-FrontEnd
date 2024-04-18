@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export default function SummaryWithImage() {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [id, setImageId] = useState<string>("");
-  const [text, setText] = useState<any[]>([]);
+  const [textArray, setTextArray] = useState([]);
 
   const token = getCookie("userToken");
 
@@ -46,11 +46,11 @@ export default function SummaryWithImage() {
       };
 
       const res1 = await fetch(
-        "http://127.0.0.1:8000/api/v1/text/extract/",
+        "https://exam-prep-app.onrender.com/api/v1/text/extract/",
         requestOptions1
       );
       const result1 = await res1.json();
-      console.log(result1);
+      setTextArray(result1.extracted_text);
     } catch (error) {
       toast.error("An error occurred");
     }
@@ -84,11 +84,9 @@ export default function SummaryWithImage() {
       </div>
 
       <div className="p-4 rounded-2xl resize-none w-4/5 border border-primaryColor">
-        {/* {
-          text.map((item) => {
-            <p>{item}</p>
-          })
-        } */}
+        {textArray.map((item: any, index) => (
+          <p key={index}>{item}</p>
+        ))}
       </div>
     </div>
   );
