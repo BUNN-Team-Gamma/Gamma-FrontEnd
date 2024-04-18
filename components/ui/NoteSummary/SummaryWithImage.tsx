@@ -1,6 +1,7 @@
 "use client";
 
 import { getCookie } from "cookies-next";
+import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -27,7 +28,7 @@ export default function SummaryWithImage() {
       };
 
       const res = await fetch(
-        "http://127.0.0.1:8000/api/v1/images/upload/",
+        "https://exam-prep-app.onrender.com/api/v1/images/upload/",
         requestOptions
       );
       const result = await res.json();
@@ -60,7 +61,7 @@ export default function SummaryWithImage() {
     <div className="mx-auto">
       {selectedImage && (
         <div className="flex flex-col gap-5">
-          <img
+          <Image
             alt="not found"
             width={250}
             src={URL.createObjectURL(selectedImage)}

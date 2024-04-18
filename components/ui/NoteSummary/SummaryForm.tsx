@@ -23,7 +23,7 @@ export default function SummaryForm() {
       };
 
       const res = await fetch(
-        "http://127.0.0.1:8000/api/v1/summarize/",
+        "https://exam-prep-app.onrender.com/api/v1/summarize/",
         requestOptions
       );
       const result = await res.json();
