@@ -39,11 +39,13 @@ export default function FlashcardForm({
   const [resData, setResdata] = useState<Question[]>();
 
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("");
   const [categoryInput, setCategoryInput] = useState("");
   const endpoint = useMemo(() => {
     return addManually
-      ? "http://127.0.0.1:8000/api/v1/flashcards/"
-      : "http://127.0.0.1:8000/api/v1/flashcards/generate/";
+      ? "https://exam-prep-app.onrender.com/api/v1/flashcards/"
+      : "https://exam-prep-app.onrender.com/api/v1/flashcards/generate/";
   }, [addManually]);
 
   const headers = useMemo(
@@ -58,7 +60,7 @@ export default function FlashcardForm({
     (async () => {
       try {
         const { data } = await axios.get(
-          "http://127.0.0.1:8000/api/v1/flashcards/categories/",
+          "https://exam-prep-app.onrender.com/api/v1/flashcards/categories/",
           { headers }
         );
         setCategories(data);
@@ -79,6 +81,7 @@ export default function FlashcardForm({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     try {
       let category = (() => {
         for (let index = 0; index < categories.length; index++) {
@@ -89,7 +92,7 @@ export default function FlashcardForm({
 
       if (!category) {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/v1/flashcards/categories/",
+          "https://exam-prep-app.onrender.com/api/v1/flashcards/categories/",
           { category_name: categoryInput },
           { headers }
         );
@@ -103,8 +106,11 @@ export default function FlashcardForm({
       console.log(data);
 
       setResdata(data);
+      setLoading(false);
       // router.push("/dashboard/files/flashcards");
     } catch (error) {
+      setLoading(false);
+      setErrMsg("Server error: View console for details");
       console.log(error);
     }
   };
@@ -219,8 +225,11 @@ export default function FlashcardForm({
             or generate with AI
           </button>
           <div className="flex gap-4 mx-auto">
-            <button className="flex justify-center bg-primaryColor p-2 w-32 font-semibold text-white rounded-full">
-              <span>Create</span>
+            <button
+              disabled={loading}
+              className="flex justify-center bg-primaryColor p-2 w-32 font-semibold text-white rounded-full"
+            >
+              {loading ? <span>Creating...</span> : <span>Create</span>}
             </button>
             {/* <button
               className={
@@ -250,6 +259,8 @@ export default function FlashcardForm({
               })}
             </div>
           </div>
+        ) : errMsg ? (
+          <>{errMsg}</>
         ) : (
           <></>
         )}
