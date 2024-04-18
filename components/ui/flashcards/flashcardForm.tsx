@@ -18,6 +18,15 @@ export type CategoryType = {
   category_name: string;
   created_at: string;
 };
+interface Question {
+  id: number;
+  category: string;
+  question: string;
+  answer: string;
+  image?: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function FlashcardForm({
   addManually,
@@ -27,13 +36,14 @@ export default function FlashcardForm({
   const [postData, setPostdata] = useState<Partial<CreateFlashcardtype>>({});
   const token = getCookie("userToken");
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [resData, setResdata] = useState<Question[]>();
 
   const router = useRouter();
   const [categoryInput, setCategoryInput] = useState("");
   const endpoint = useMemo(() => {
     return addManually
-      ? "https://exam-prep-app.onrender.com/api/v1/flashcards/"
-      : "https://exam-prep-app.onrender.com/api/v1/flashcards/generate/";
+      ? "http://127.0.0.1:8000/api/v1/flashcards/"
+      : "http://127.0.0.1:8000/api/v1/flashcards/generate/";
   }, [addManually]);
 
   const headers = useMemo(
@@ -48,7 +58,7 @@ export default function FlashcardForm({
     (async () => {
       try {
         const { data } = await axios.get(
-          "https://exam-prep-app.onrender.com/api/v1/flashcards/categories/",
+          "http://127.0.0.1:8000/api/v1/flashcards/categories/",
           { headers }
         );
         setCategories(data);
@@ -79,7 +89,7 @@ export default function FlashcardForm({
 
       if (!category) {
         const response = await axios.post(
-          "https://exam-prep-app.onrender.com/api/v1/flashcards/categories/",
+          "http://127.0.0.1:8000/api/v1/flashcards/categories/",
           { category_name: categoryInput },
           { headers }
         );
@@ -90,11 +100,16 @@ export default function FlashcardForm({
         { ...postData, category: category?.id },
         { headers }
       );
-      router.push("/dashboard/files/flashcards");
+      console.log(data);
+
+      setResdata(data);
+      // router.push("/dashboard/files/flashcards");
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(resData);
+
   return (
     <>
       <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-2/5 py-6">
@@ -218,6 +233,27 @@ export default function FlashcardForm({
           </div>
         </div>
       </form>
+      <div className="p-4 rounded-2xl resize-none w-2/5 border border-primaryColor">
+        {resData?.length ? (
+          <div className="flex flex-col gap-4">
+            <span className="flex font-bold text-[1.2rem]">
+              The Flash Card Questions and Answers
+            </span>
+            <div className="flex flex-col gap-4 border border-primaryColor">
+              {resData.map((question: Question, index: number) => {
+                return (
+                  <div key={index}>
+                    <span>Question: {question.question}</span>
+                    <span>Answer: {question.answer}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   );
 }

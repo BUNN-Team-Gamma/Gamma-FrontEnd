@@ -8,7 +8,7 @@ export default function SummaryTextListPage() {
   //     []
   //   );
   //   const token = getCookie("userToken");
-  //   const endpoint_base = "https://exam-prep-app.onrender.com/api/v1/";
+  //   const endpoint_base = "http://127.0.0.1:8000/api/v1/";
 
   //   const headers = useMemo(
   //     () => ({

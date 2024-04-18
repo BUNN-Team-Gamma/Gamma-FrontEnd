@@ -25,7 +25,7 @@ export default function SummaryForm() {
         body: formdata,
       };
       const res = await fetch(
-        "https://exam-prep-app.onrender.com/api/v1/summarize/",
+        "http://127.0.0.1:8000/api/v1/summarize/",
         requestOptions
       );
       const result = await res.json();
@@ -63,13 +63,11 @@ export default function SummaryForm() {
       </form>
       <div className="p-4 rounded-2xl resize-none w-4/5 border border-primaryColor">
         <article className="md:mx-auto text-justify prose prose-img:w-full dark:prose-invert lg:prose-xl">
-          {
-            summary?.map((item) => (
-              <Markdown key={item} className="">
-                {item}
-              </Markdown>
-            ))
-          }
+          {summary?.map((item) => (
+            <Markdown key={item} className="">
+              {item}
+            </Markdown>
+          ))}
         </article>
       </div>
     </div>
