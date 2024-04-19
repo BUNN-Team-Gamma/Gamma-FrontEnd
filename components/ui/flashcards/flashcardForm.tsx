@@ -107,7 +107,7 @@ export default function FlashcardForm({
 
       setResdata(data);
       setLoading(false);
-      // router.push("/dashboard/files/flashcards");
+      router.push("/dashboard/files/flashcards");
     } catch (error: any) {
       setLoading(false);
       setErrMsg(
