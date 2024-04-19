@@ -108,9 +108,13 @@ export default function FlashcardForm({
       setResdata(data);
       setLoading(false);
       // router.push("/dashboard/files/flashcards");
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
-      setErrMsg("Server error: View console for details");
+      setErrMsg(
+        error?.response?.data?.error
+          ? error?.response?.data?.error
+          : "Server error: View console for details"
+      );
       console.log(error);
     }
   };
