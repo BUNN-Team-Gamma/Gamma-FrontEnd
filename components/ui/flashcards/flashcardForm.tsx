@@ -107,7 +107,7 @@ export default function FlashcardForm({
 
       setResdata(data);
       setLoading(false);
-      router.push("/dashboard/files/flashcards");
+      router.push("/dashboard/files/flashcards/" + categoryInput);
     } catch (error: any) {
       setLoading(false);
       setErrMsg(
@@ -264,7 +264,12 @@ export default function FlashcardForm({
             </div>
           </div>
         ) : errMsg ? (
-          <>{errMsg}</>
+          <>
+            <div>
+              <p>{errMsg}</p>
+              <p>Please Try Again.</p>
+            </div>
+          </>
         ) : (
           <></>
         )}
