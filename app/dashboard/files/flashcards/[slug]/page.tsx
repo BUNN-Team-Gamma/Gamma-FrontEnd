@@ -22,7 +22,7 @@ const getData = async (id: string, url: string) => {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const id = params?.slug;
-  const endpoint_base = `https://exam-prep-app.onrender.com/api/v1/flashcards/`;
+  const endpoint_base = `https://exam-prep-app-1.onrender.com/api/v1/flashcards/`;
   const [data, title]: any = await getData(id, endpoint_base);
 
   return (

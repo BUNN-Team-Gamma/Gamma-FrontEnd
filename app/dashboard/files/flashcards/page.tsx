@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 export default function FlashcardCategoryListPage() {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = getCookie("userToken");
-  const endpoint_base = "https://exam-prep-app.onrender.com/api/v1/";
+  const endpoint_base = "https://exam-prep-app-1.onrender.com/api/v1/";
 
   const headers = useMemo(
     () => ({

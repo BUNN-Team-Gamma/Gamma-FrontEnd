@@ -44,8 +44,8 @@ export default function FlashcardForm({
   const [categoryInput, setCategoryInput] = useState("");
   const endpoint = useMemo(() => {
     return addManually
-      ? "https://exam-prep-app.onrender.com/api/v1/flashcards/"
-      : "https://exam-prep-app.onrender.com/api/v1/flashcards/generate/";
+      ? "https://exam-prep-app-1.onrender.com/api/v1/flashcards/"
+      : "https://exam-prep-app-1.onrender.com/api/v1/flashcards/generate/";
   }, [addManually]);
 
   const headers = useMemo(
@@ -60,7 +60,7 @@ export default function FlashcardForm({
     (async () => {
       try {
         const { data } = await axios.get(
-          "https://exam-prep-app.onrender.com/api/v1/flashcards/categories/",
+          "https://exam-prep-app-1.onrender.com/api/v1/flashcards/categories/",
           { headers }
         );
         setCategories(data);
@@ -92,7 +92,7 @@ export default function FlashcardForm({
 
       if (!category) {
         const response = await axios.post(
-          "https://exam-prep-app.onrender.com/api/v1/flashcards/categories/",
+          "https://exam-prep-app-1.onrender.com/api/v1/flashcards/categories/",
           { category_name: categoryInput },
           { headers }
         );
@@ -108,9 +108,13 @@ export default function FlashcardForm({
       setResdata(data);
       setLoading(false);
       // router.push("/dashboard/files/flashcards");
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
-      setErrMsg("Server error: View console for details");
+      setErrMsg(
+        error?.response?.data?.error
+          ? error?.response?.data?.error
+          : "Server error: View console for details"
+      );
       console.log(error);
     }
   };
