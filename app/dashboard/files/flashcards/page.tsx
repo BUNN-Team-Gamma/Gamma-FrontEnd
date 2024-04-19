@@ -22,7 +22,7 @@ export default function FlashcardCategoryListPage() {
     (async () => {
       try {
         const { data } = await axios.get(
-          endpoint_base + "flashcards/categories/",
+          endpoint_base + "flashcards/",
           { headers }
         );
         setCategoryList(data);

@@ -1,7 +1,6 @@
 "use client";
 
 import { getCookie } from "cookies-next";
-import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
