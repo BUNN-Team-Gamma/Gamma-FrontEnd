@@ -5,7 +5,7 @@ import { deleteCookie, setCookie } from "cookies-next";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/store";
 
-const baseurl = "https://exam-prep-app.onrender.com/api/v1/auth";
+const baseurl = "https://exam-prep-app-1.onrender.com/api/v1/auth";
 
 const useAuth = () => {
   const router = useRouter();

@@ -17,7 +17,7 @@ export default function ExtractedTextPage() {
     []
   );
   const token = getCookie("userToken");
-  const endpoint_base = "https://exam-prep-app.onrender.com/api/v1/";
+  const endpoint_base = "https://exam-prep-app-1.onrender.com/api/v1/";
 
   const headers = useMemo(
     () => ({

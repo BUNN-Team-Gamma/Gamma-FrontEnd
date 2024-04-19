@@ -1,7 +1,6 @@
 "use client";
 
 import { getCookie } from "cookies-next";
-import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -30,7 +29,7 @@ export default function SummaryWithImage() {
       };
 
       const res = await fetch(
-        "https://exam-prep-app.onrender.com/api/v1/images/upload/",
+        "https://exam-prep-app-1.onrender.com/api/v1/images/upload/",
         requestOptions
       );
       const result = await res.json();
@@ -57,7 +56,7 @@ export default function SummaryWithImage() {
         body: formdata,
       };
       const res = await fetch(
-        "https://exam-prep-app.onrender.com/api/v1/text/extract/",
+        "https://exam-prep-app-1.onrender.com/api/v1/text/extract/",
         requestOptions1
       );
       const result = await res.json();
