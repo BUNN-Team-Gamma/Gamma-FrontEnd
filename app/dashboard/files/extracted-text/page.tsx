@@ -42,8 +42,8 @@ export default function ExtractedTextPage() {
   }, [headers]);
   return (
     <>
-      <section className="px-16 py-10 flex w-full min-h-80 justify-center">
-        <div className="flex flex-col gap-4 w-full">
+      <section className="px-4 md:px-16 py-5 md:py-10 flex w-full min-h-80 justify-center">
+        <div className="flex flex-col gap-2 md:gap-4 w-full">
           <span className="text-[1.2rem] font-bold">Extracted Texts</span>
           <ListView list={extractedTextList} />
         </div>

@@ -1,8 +1,11 @@
 "use client";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { IoIosAdd } from "react-icons/io";
 
 export type CreateFlashcardtype = {
   question: string;
@@ -34,14 +37,19 @@ export default function FlashcardForm({
   addManually: boolean;
 }) {
   const [postData, setPostdata] = useState<Partial<CreateFlashcardtype>>({});
+  const searchParams = useSearchParams();
   const token = getCookie("userToken");
+  const router = useRouter();
+
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [resData, setResdata] = useState<Question[]>();
+  const [isHovered, setIsHovered] = useState(false);
+  const queryCategory = searchParams.get("category");
 
-  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  const [errMsg, setErrMsg] = useState<string>("");
+  const [addNew, setAddNew] = useState<boolean>(false);
   const [categoryInput, setCategoryInput] = useState("");
+
   const endpoint = useMemo(() => {
     return addManually
       ? "https://exam-prep-app-1.onrender.com/api/v1/flashcards/"
@@ -56,6 +64,10 @@ export default function FlashcardForm({
     [token]
   );
 
+  useMemo(() => {
+    if (queryCategory) setCategoryInput(queryCategory);
+  }, [queryCategory]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -69,6 +81,14 @@ export default function FlashcardForm({
       }
     })();
   }, [headers]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -107,13 +127,20 @@ export default function FlashcardForm({
 
       setResdata(data);
       setLoading(false);
-      router.push("/dashboard/files/flashcards/" + categoryInput);
+      setPostdata({});
+      {
+        addNew
+          ? router.push(
+              "/dashboard/flashcards/addManually?category=" + categoryInput
+            )
+          : router.push("/dashboard/files/flashcards/" + categoryInput);
+      }
     } catch (error: any) {
       setLoading(false);
-      setErrMsg(
-        error?.response?.data?.error
-          ? error?.response?.data?.error
-          : "Server error: View console for details"
+      toast.error(
+        error?.response?.data?.category_name?.[0]
+          ? "Please add a Category"
+          : "Something went wrong. Please try again."
       );
       console.log(error);
     }
@@ -122,7 +149,10 @@ export default function FlashcardForm({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-2/5 py-6">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col md:text-base text-[0.875rem] sm:w-3/5 gap-4 md:gap-6 w-full lg:w-2/5 py-2 md:py-6 mx-auto"
+      >
         <div className="flex flex-col gap-2 w-full">
           <label
             htmlFor="category"
@@ -133,12 +163,22 @@ export default function FlashcardForm({
           <input
             name="category"
             id="category"
+            list="category-datalist"
             value={categoryInput}
             onChange={(event) => {
               setCategoryInput(event.target.value);
             }}
             className="flex w-full border border-primaryColor rounded-lg p-3"
           />
+          <datalist id="category-datalist">
+            {categories.map((category) => {
+              return (
+                <option value={category.category_name} key={category.id}>
+                  {category.category_name}
+                </option>
+              );
+            })}
+          </datalist>
         </div>
         <div
           className={
@@ -220,14 +260,15 @@ export default function FlashcardForm({
         </div>
 
         <div className="flex flex-col mx-auto gap-2">
-          <button
+          <Link
+            href={"/dashboard/flashcards/ai-generated"}
             className={
               (addManually ? "flex " : "hidden ") +
               " justify-center text-primaryColor font-semibold text-[0.875rem] underline"
             }
           >
             or generate with AI
-          </button>
+          </Link>
           <div className="flex gap-4 mx-auto">
             <button
               disabled={loading}
@@ -235,45 +276,32 @@ export default function FlashcardForm({
             >
               {loading ? <span>Creating...</span> : <span>Create</span>}
             </button>
-            {/* <button
+            <button
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => setAddNew(true)}
+              disabled={loading}
               className={
                 (addManually ? "flex " : "hidden ") +
-                " justify-center bg-primaryColor p-2 w-40 font-semibold text-white rounded-full"
+                ` transition duration-200 ease-in-out ${
+                  isHovered ? "w-40 mx-0" : "-mx-2"
+                } justify-center bg-primaryColor p-2 hover:w-40 font-semibold text-[o.75rem] md:text-[0.875rem] text-white rounded-full`
               }
             >
-              <span>Save and add...</span>
-            </button> */}
+              {isHovered ? (
+                <span>Save and add new...</span>
+              ) : (
+                <span className="my-auto">
+                  <IoIosAdd
+                    color="#fff"
+                    className="text-[1.2rem] md:text-[1.5rem] font-semibold"
+                  />
+                </span>
+              )}
+            </button>
           </div>
         </div>
       </form>
-      <div className="p-4 rounded-2xl resize-none w-2/5 border border-primaryColor">
-        {resData?.length ? (
-          <div className="flex flex-col gap-4">
-            <span className="flex font-bold text-[1.2rem]">
-              The Flash Card Questions and Answers
-            </span>
-            <div className="flex flex-col gap-4 border border-primaryColor">
-              {resData.map((question: Question, index: number) => {
-                return (
-                  <div key={index}>
-                    <span>Question: {question.question}</span>
-                    <span>Answer: {question.answer}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ) : errMsg ? (
-          <>
-            <div>
-              <p>{errMsg}</p>
-              <p>Please Try Again.</p>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
     </>
   );
 }

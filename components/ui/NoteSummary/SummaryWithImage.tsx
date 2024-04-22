@@ -29,7 +29,7 @@ export default function SummaryWithImage() {
       };
 
       const res = await fetch(
-        "https://exam-prep-app-1.onrender.com/api/v1/images/upload/",
+        "http://127.0.0.1:8000/api/v1/images/upload/",
         requestOptions
       );
       const result = await res.json();
@@ -56,7 +56,7 @@ export default function SummaryWithImage() {
         body: formdata,
       };
       const res = await fetch(
-        "https://exam-prep-app-1.onrender.com/api/v1/text/extract/",
+        "http://127.0.0.1:8000/api/v1/text/extract/",
         requestOptions1
       );
       const result = await res.json();

@@ -119,16 +119,34 @@ export default function Navbar() {
             navbar ? "opacity-100 scale-100" : "opacity-0 scale-0"
           } duration-500`}
         >
-          {navLinks.map((item) => (
-            <Link
-              className="hover:text-primaryColor"
-              onClick={toggleMenu}
-              key={item.path}
-              href={item.path}
-            >
-              {item.name}
-            </Link>
-          ))}
+          <Link className={"hover:text-primaryColor"} href={navLinks[0].path}>
+            {navLinks[0].name}
+          </Link>
+          <Link
+            className={"hover:text-primaryColor"}
+            href={"/dashboard/files/extracted-text"}
+          >
+            Extracted Texts
+          </Link>
+          <Link
+            className={"hover:text-primaryColor"}
+            href={"/dashboard/files/flashcards"}
+          >
+            Flashcards
+          </Link>
+          {navLinks.map((item, index) => {
+            if (index === 0) return;
+            return (
+              <Link
+                className="hover:text-primaryColor"
+                onClick={toggleMenu}
+                key={item.path}
+                href={item.path}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
           {authenticated ? (
             <div onClick={logout} className="block lg:hidden">
               <PrimaryBtn variant text="Logout" size="" weight="" />

@@ -22,8 +22,10 @@ export default function FlashcardCategoryListPage() {
     (async () => {
       try {
         const { data } = await axios.get(
-          endpoint_base + "flashcards/",
-          { headers }
+          endpoint_base + "flashcards/categories/",
+          {
+            headers,
+          }
         );
         setCategoryList(data);
       } catch (error) {
@@ -33,8 +35,8 @@ export default function FlashcardCategoryListPage() {
   }, [headers]);
   return (
     <>
-      <section className="px-16 py-10 flex w-full min-h-80 justify-center">
-        <div className="flex flex-col gap-4 w-full">
+      <section className="px-4 md:px-16 py-2 md:py-10 flex w-full min-h-80 justify-center">
+        <div className="flex flex-col gap-2 md:gap-4 w-full">
           <span className="text-[1.2rem] font-bold">Flashcard Categories</span>
           <ListView list={categoryList} />
         </div>
