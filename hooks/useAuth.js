@@ -70,7 +70,17 @@ const useAuth = () => {
     const res = await fetch(baseurl + "/signup/", requestOptions);
 
     if (!res.ok) {
-      toast.error("An error occurred! Please try again!");
+      try {
+        const errMsg = await res.json();
+        toast.error(
+          errMsg?.errors?.fields?.username?.[0]
+            ? "Username already in use"
+            : "An error occurred! Please try again!"
+        );
+      } catch (error) {
+        console.log(error);
+        toast.error("Email already in use");
+      }
       setLoading(false);
     } else {
       const result = await res.json();
