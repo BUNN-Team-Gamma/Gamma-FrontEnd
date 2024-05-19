@@ -29,7 +29,7 @@ export default function SummaryWithImage() {
       };
 
       const res = await fetch(
-        "http://127.0.0.1:8000/api/v1/images/upload/",
+        "https://gamma-front-end.vercel.app/api/v1/images/upload/",
         requestOptions
       );
       const result = await res.json();
@@ -56,7 +56,7 @@ export default function SummaryWithImage() {
         body: formdata,
       };
       const res = await fetch(
-        "http://127.0.0.1:8000/api/v1/text/extract/",
+        "https://gamma-front-end.vercel.app/api/v1/text/extract/",
         requestOptions1
       );
       const result = await res.json();

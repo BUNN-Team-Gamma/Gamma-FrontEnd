@@ -25,7 +25,7 @@ export default function SummaryForm() {
         body: formdata,
       };
       const res = await fetch(
-        "http://127.0.0.1:8000/api/v1/summarize/",
+        "https://gamma-front-end.vercel.app/api/v1/summarize/",
         requestOptions
       );
       const result = await res.json();
